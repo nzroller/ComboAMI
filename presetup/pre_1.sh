@@ -21,30 +21,32 @@ sudo echo "sun-java6-bin shared/accepted-sun-dlj-v1-1 boolean true" | sudo debco
 sudo apt-get -y update
 sudo apt-get -y install git
 
+
+# Install Java
+cd $HOME
+wget https://s3.amazonaws.com/ds-java/jdk-6u31-linux-x64.bin
+sudo mkdir -p /opt/java/64
+sudo mv jdk-6u31-linux-x64.bin /opt/java/64/
+cd /opt/java/64
+sudo chmod +x jdk*
+sudo ./jdk*
+
+# Setup java alternatives
+sudo update-alternatives --install "/usr/bin/java" "java" "/opt/java/64/jdk1.6.0_31/bin/java" 1
+sudo update-alternatives --set java /opt/java/64/jdk1.6.0_31/bin/java
+export JAVA_HOME=/opt/java/64/jdk1.6.0_31
+
 # Git these files on to the server's home directory
 git config --global color.ui auto
 git config --global color.diff auto
 git config --global color.status auto
 git clone git://github.com/nzroller/ComboAMI.git datastax_ami
+
+# Begin the actual priming
 cd datastax_ami
 git checkout $(head -n 1 presetup/VERSION)
 
-# Install Java
-sudo su
-wget https://s3.amazonaws.com/ds-java/jdk-6u31-linux-x64.bin
-mkdir -p /opt/java/64
-mv jdk-6u31-linux-x64.bin /opt/java/64/
-cd /opt/java/64
-chmod +x jdk*
-./jdk*
-
-# Setup java alternatives
-exit
-sudo update-alternatives --install "/usr/bin/java" "java" "/opt/java/64/jdk1.6.0_31/bin/java" 1
-sudo update-alternatives --set java /opt/java/64/jdk1.6.0_31/bin/java
-export JAVA_HOME=/opt/java/64/jdk1.6.0_31
-
-# Begin the actual priming
+# git pull && rm -rf ~/.bash_history && history -c
 git pull
 sudo python presetup/pre_2.py
 sudo chown -R ubuntu:ubuntu . 
@@ -52,4 +54,3 @@ rm -rf ~/.bash_history
 history -c
 
 
-# git pull && rm -rf ~/.bash_history && history -c
