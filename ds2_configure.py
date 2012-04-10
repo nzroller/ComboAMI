@@ -502,8 +502,8 @@ def mount_raid(devices):
 
     # Create a list of partitions to RAID
     logger.exe('sudo fdisk -l')
-    partitions = glob.glob("/dev/sd*[0-9]")
-    partitions.remove('/dev/sda1')
+    partitions = glob.glob("/dev/xvd*[0-9]")
+    partitions.remove('/dev/xvda1')
     partitions.sort()
     logger.info('Partitions about to be added to RAID0 set: {0}'.format(partitions))
 
@@ -564,8 +564,8 @@ def format_xfs(devices):
 
     # Create a list of partitions to RAID
     logger.exe('sudo fdisk -l')
-    partitions = glob.glob("/dev/sd*[0-9]")
-    partitions.remove('/dev/sda1')
+    partitions = glob.glob("/dev/xvd*[0-9]")
+    partitions.remove('/dev/xvda1')
     partitions.sort()
 
     logger.info('Formatting the new partition:')
@@ -600,8 +600,8 @@ def prepare_for_raid():
     logger.exe('sudo chmod 644 {0}'.format(file_to_open))
 
     # Create a list of devices
-    devices = glob.glob("/dev/sd*")
-    devices.remove('/dev/sda1')
+    devices = glob.glob("/dev/xvd*")
+    devices.remove('/dev/xvda1')
     devices.sort()
     logger.info('Unformatted devices: {0}'.format(devices))
 
