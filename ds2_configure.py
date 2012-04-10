@@ -64,8 +64,8 @@ def get_ec2_data():
     req = urllib2.Request('http://instance-data/latest/meta-data/instance-type')
     instancetype = urllib2.urlopen(req).read()
 
-    if instancetype == 'm1.small':
-        exit_path("m1.small instances are not supported. At minimum, use an m1.large instance.")
+#    if instancetype == 'm1.small':
+#        exit_path("m1.small instances are not supported. At minimum, use an m1.large instance.")
 
     # Find internal IP address for seed list
     req = urllib2.Request('http://instance-data/latest/meta-data/local-ipv4')
