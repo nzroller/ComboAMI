@@ -24,7 +24,8 @@ sudo apt-get -y install git
 
 # Install Java
 cd $HOME
-wget https://s3.amazonaws.com/ds-java/jdk-6u31-linux-x64.bin
+#
+#wget https://s3.amazonaws.com/ds-java/jdk-6u31-linux-x64.bin
 sudo mkdir -p /opt/java/64
 sudo mv jdk-6u31-linux-x64.bin /opt/java/64/
 cd /opt/java/64
