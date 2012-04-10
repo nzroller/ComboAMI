@@ -2,11 +2,11 @@
 # Current as of 03/29/2012
 ### Script provided by DataStax.
 
-if [ ! -f cert-*.pem ];
-then
-    echo "Cert files not found on machine!"
-    exit
-fi
+#if [ ! -f cert-*.pem ];
+#then
+#    echo "Cert files not found on machine!"
+#    exit
+#fi
 
 # Download and install repo keys
 gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00
@@ -25,7 +25,7 @@ sudo apt-get -y install git
 git config --global color.ui auto
 git config --global color.diff auto
 git config --global color.status auto
-git clone git://github.com/riptano/ComboAMI.git datastax_ami
+git clone git://github.com/nzroller/ComboAMI.git datastax_ami
 cd datastax_ami
 git checkout $(head -n 1 presetup/VERSION)
 
