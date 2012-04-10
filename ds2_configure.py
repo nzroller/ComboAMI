@@ -669,6 +669,8 @@ def sync_clocks():
     logger.exe('sudo service ntp restart')
 
 def additional_pre_configurations():
+    # we're on ubuntu 11.10 and opscenter needs libssl0.9.8 rather than libssl1.0.0
+    logger.exe('sudo apt-get -y install libssl0.9.8')
     pass
 
 def additional_post_configurations():
