@@ -41,6 +41,7 @@ export JAVA_HOME=/opt/java/64/jdk1.6.0_31
 git config --global color.ui auto
 git config --global color.diff auto
 git config --global color.status auto
+git config --global alias.st status
 git clone git://github.com/nzroller/ComboAMI.git datastax_ami
 
 # Begin the actual priming
