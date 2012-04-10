@@ -67,6 +67,8 @@ def get_ec2_data():
 #    if instancetype == 'm1.small':
 #        exit_path("m1.small instances are not supported. At minimum, use an m1.large instance.")
 
+    instance_data['instancetype'] = urllib2.urlopen(req).read()
+
     # Find internal IP address for seed list
     req = urllib2.Request('http://instance-data/latest/meta-data/local-ipv4')
     instance_data['internalip'] = urllib2.urlopen(req).read()
@@ -503,7 +505,8 @@ def mount_raid(devices):
     # Create a list of partitions to RAID
     logger.exe('sudo fdisk -l')
     partitions = glob.glob("/dev/xvd*[0-9]")
-    partitions.remove('/dev/xvda1')
+    # exclude xvda partitions
+    partitions = filter(lambda x : not x.startswith("/dev/xvda"), partitions);
     partitions.sort()
     logger.info('Partitions about to be added to RAID0 set: {0}'.format(partitions))
 
@@ -565,7 +568,7 @@ def format_xfs(devices):
     # Create a list of partitions to RAID
     logger.exe('sudo fdisk -l')
     partitions = glob.glob("/dev/xvd*[0-9]")
-    partitions.remove('/dev/xvda1')
+    partitions = filter(lambda x : not x.startswith("/dev/xvda"), partitions);
     partitions.sort()
 
     logger.info('Formatting the new partition:')
@@ -600,8 +603,9 @@ def prepare_for_raid():
     logger.exe('sudo chmod 644 {0}'.format(file_to_open))
 
     # Create a list of devices
-    devices = glob.glob("/dev/xvd*")
-    devices.remove('/dev/xvda1')
+    devices = glob.glob("/dev/xvd[a-z]")
+    devices = filter(lambda x : not x.startswith("/dev/xvda"), devices);
+    
     devices.sort()
     logger.info('Unformatted devices: {0}'.format(devices))
 
